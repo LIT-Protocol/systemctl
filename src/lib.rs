@@ -11,7 +11,7 @@ extern crate default_env;
 /// Invokes `systemctl $args` silently
 fn systemctl (args: Vec<&str>) -> std::io::Result<ExitStatus> {
     let mut child = std::process::Command::new(default_env!("SYSTEMCTL_PATH", "/usr/bin/systemctl"))
-        .args(args)
+        .args(args).arg("--quiet")
         .stdout(std::process::Stdio::piped())
         .stderr(std::process::Stdio::null())
         .spawn()?;
@@ -57,6 +57,12 @@ pub fn restart (unit: &str) -> std::io::Result<ExitStatus> { systemctl(vec!["res
 
 /// Forces given `unit` to stop
 pub fn stop (unit: &str) -> std::io::Result<ExitStatus> { systemctl(vec!["stop", unit]) }
+
+/// Enables given `unit`
+pub fn enable (unit: &str) -> std::io::Result<ExitStatus> { systemctl(vec!["enable", unit]) }
+
+/// Disabled given `unit`
+pub fn disable (unit: &str) -> std::io::Result<ExitStatus> { systemctl(vec!["disable", unit]) }
 
 /// Returns raw status from `systemctl status $unit` call
 pub fn status (unit: &str) -> std::io::Result<String> { systemctl_capture(vec!["status", unit]) }
