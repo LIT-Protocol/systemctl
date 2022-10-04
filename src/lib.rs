@@ -58,6 +58,9 @@ pub fn restart (unit: &str) -> std::io::Result<ExitStatus> { systemctl(vec!["res
 /// Forces given `unit` to stop
 pub fn stop (unit: &str) -> std::io::Result<ExitStatus> { systemctl(vec!["stop", unit]) }
 
+/// Starts given `unit`
+pub fn start (unit: &str) -> std::io::Result<ExitStatus> { systemctl(vec!["start", unit]) }
+
 /// Enables given `unit`
 pub fn enable (unit: &str) -> std::io::Result<ExitStatus> { systemctl(vec!["enable", unit]) }
 
